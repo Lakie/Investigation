@@ -1,5 +1,10 @@
 package com.unesasoft.spring;
 
+import com.unesasoft.persistance.dao.UserRepository;
+import com.unesasoft.persistance.dao.impl.UserRepositoryImpl;
+import com.unesasoft.persistance.dto.UserDTO;
+import com.unesasoft.service.IUserService;
+import com.unesasoft.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -9,6 +14,8 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.env.Environment;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.Properties;
 
 /**
@@ -21,6 +28,10 @@ import java.util.Properties;
 public class AppConfig {
     @Autowired
     private Environment env;
+    @Autowired
+    private UserService userService;
+    @PersistenceContext
+    EntityManager entityManager;
 
     // beans
 
@@ -42,5 +53,15 @@ public class AppConfig {
         javaMailProps.put("mail.smtp.starttls.enable", true);
         mailSenderImpl.setJavaMailProperties(javaMailProps);
         return mailSenderImpl;
+    }
+
+    //repositories
+    @Bean
+    public IUserService iUserService(){
+        return userService;
+    }
+    @Bean
+    public UserRepository userRepository(){
+        return new UserRepositoryImpl(UserDTO.class, entityManager);
     }
 }

@@ -9,5 +9,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface RoleRepository extends JpaRepository<RoleDTO, Long> {
     public RoleDTO findByName(String name);
 
-    public void delete(RoleDTO role);
 }
