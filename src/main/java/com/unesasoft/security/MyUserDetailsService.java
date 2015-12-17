@@ -7,7 +7,6 @@ import com.unesasoft.persistance.dto.RoleDTO;
 import com.unesasoft.persistance.dto.UserDTO;
 import com.unesasoft.service.IUserService;
 import com.unesasoft.service.UserDetailsService;
-import netscape.security.Privilege;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.GrantedAuthority;

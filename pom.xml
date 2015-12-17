@@ -13,7 +13,6 @@
     <packaging>war</packaging>
 
 
-
     <repositories>
         <repository>
             <id>springsource-milestones</id>
@@ -38,7 +37,6 @@
             <artifactId>spring-context-support</artifactId>
             <version>${springframework.version}</version>
         </dependency>
-
 
 
         <dependency>
@@ -162,12 +160,14 @@
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>3.1.0</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>javax.servlet.jsp</groupId>
             <artifactId>jsp-api</artifactId>
             <version>2.2.1-b03</version>
+
         </dependency>
 
         <dependency>
@@ -188,6 +188,17 @@
             <version>1.1.0</version>
         </dependency>
 
+        <!-- this should be deleted-->
+        <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>rt</artifactId>
+            <version>2.2</version>
+            <scope>system</scope>
+            <systemPath>C:\Java\jdk1.8.0_60\jre\lib\rt.jar</systemPath>
+        </dependency>
+        <!-- this should be deleted-->
+
+
         <!-- testing -->
         <dependency>
             <groupId>junit</groupId>
@@ -205,12 +216,30 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.0.2</version>
+                <version>3.3</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <warSourceDirectory>src/main/webapp</warSourceDirectory>
+                    <warName>spring-investigation</warName>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+            <!--<plugin>-->
+            <!--<groupId>org.apache.tomcat.maven</groupId>-->
+            <!--<artifactId>tomcat7-maven-plugin</artifactId>-->
+            <!--<version>2.1</version>-->
+            <!--<configuration>-->
+            <!--<path>/</path>-->
+            <!--</configuration>-->
+            <!--</plugin>-->
         </plugins>
     </build>
 
