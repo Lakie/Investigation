@@ -16,7 +16,7 @@ import java.util.Properties;
  */
 
 @Configuration
-@ComponentScan(basePackages = { "org.baeldung.registration" })
+@ComponentScan(basePackages = { "com.unesasoft" })
 @PropertySource("classpath:email.properties")
 public class AppConfig {
     @Autowired
