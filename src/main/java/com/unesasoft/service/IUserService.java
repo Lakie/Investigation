@@ -26,7 +26,7 @@ public interface IUserService {
 
     void createPasswordResetTokenForUser(UserDTO user, String token);
 
-    UserDTO findUserByEmail(String email);
+//    UserDTO findUserByEmail(String email);
 
     PasswordResetTokenDTO getPasswordResetToken(String token);
 

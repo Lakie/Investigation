@@ -14,10 +14,7 @@
             <td class="foot1"><!-- --></td>
             <td class="foot2">
 	<span>
-	2009 &copy; CompanyName
-	</span>
-	<span>
-	Designed by <a class="invert" href="http://wordpress-premium.com">Wordpress-Premium</a>
+	2016 &copy; <a class="invert" href="http://unesasoft.com">Unesasoft</a>
 	</span>
             </td>
             <td class="foot3">
@@ -27,6 +24,7 @@
 	<a href="#">Portfolio</a> |
 	<a href="#">Our Blog</a> |
 	<a href="#">Contact Us</a>
+	<a href="/user/registration">Registration</a>
 	</span>
             </td>
         </tr>

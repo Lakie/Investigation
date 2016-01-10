@@ -2,7 +2,6 @@ package com.unesasoft.spring;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -23,8 +22,8 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 @PropertySource({ "classpath:persistence.properties" })
-@ComponentScan({ "com.unesasoft.persistence" })
-@EnableJpaRepositories(basePackages = "com.unesasoft.persistence.dao")
+//@ComponentScan({ "com.unesasoft.persistence" })
+@EnableJpaRepositories(basePackages = "com.unesasoft.persistance")
 public class PersistenceJPAConfig {
     @Autowired
     private Environment env;
@@ -33,14 +32,18 @@ public class PersistenceJPAConfig {
         super();
     }
 
+   private LocalContainerEntityManagerFactoryBean em = null;
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-        final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-        em.setDataSource(dataSource());
-        em.setPackagesToScan(new String[] { "com.unesasoft.persistence.dto" });
-        final HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        em.setJpaVendorAdapter(vendorAdapter);
-        em.setJpaProperties(additionalProperties());
+        if (em == null) {
+            em = new LocalContainerEntityManagerFactoryBean();
+
+            em.setDataSource(dataSource());
+            em.setPackagesToScan("com.unesasoft.persistance.dto");
+            final HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+            em.setJpaVendorAdapter(vendorAdapter);
+            em.setJpaProperties(additionalProperties());
+        }
         return em;
     }
 

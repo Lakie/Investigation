@@ -66,9 +66,7 @@ public class RegistrationController {
 
     }
 
-    // Registration
-
-    @RequestMapping(value = "/user/registration", method = RequestMethod.POST)
+     @RequestMapping(value = "/user/registration", method = RequestMethod.POST)
     @ResponseBody
     public GenericResponse registerUserAccount(@Valid final UserBean accountDto, final HttpServletRequest request) throws UserAlreadyExistException {
         LOGGER.debug("Registering user account with information: {}", accountDto);
@@ -126,7 +124,7 @@ public class RegistrationController {
     @RequestMapping(value = "/user/resetPassword", method = RequestMethod.POST)
     @ResponseBody
     public GenericResponse resetPassword(final HttpServletRequest request, @RequestParam("email") final String userEmail) throws UserNotFoundException {
-        final UserDTO user = userService.findUserByEmail(userEmail);
+        final UserDTO user = null;//userService.findUserByEmail(userEmail);
         if (user == null) {
             throw new UserNotFoundException();
         }
@@ -176,7 +174,7 @@ public class RegistrationController {
     @PreAuthorize("hasRole('READ_PRIVILEGE')")
     @ResponseBody
     public GenericResponse changeUserPassword(final Locale locale, @RequestParam("password") final String password, @RequestParam("oldpassword") final String oldPassword) throws InvalidOldPasswordException {
-        final UserDTO user = userService.findUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+        final UserDTO user = null;//userService.findUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         if (!userService.checkIfValidOldPassword(user, oldPassword)) {
             throw new InvalidOldPasswordException();
         }

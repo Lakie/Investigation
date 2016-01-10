@@ -10,6 +10,7 @@ import com.unesasoft.persistance.dto.PasswordResetTokenDTO;
 import com.unesasoft.persistance.dto.UserDTO;
 import com.unesasoft.persistance.dto.VerificationTokenDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,8 +33,8 @@ public class UserService implements IUserService {
     @Autowired
     private PasswordResetTokenRepository passwordTokenRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    //@Autowired
+    private PasswordEncoder passwordEncoder=new BCryptPasswordEncoder();;
 
     @Autowired
     private RoleRepository roleRepository;
@@ -97,10 +98,10 @@ public class UserService implements IUserService {
         passwordTokenRepository.save(myToken);
     }
 
-    @Override
-    public UserDTO findUserByEmail(final String email) {
-        return repository.findByEmail(email);
-    }
+//    @Override
+//    public UserDTO findUserByEmail(final String email) {
+//        return repository.findByEmail(email);
+//    }
 
     @Override
     public PasswordResetTokenDTO getPasswordResetToken(final String token) {
@@ -129,10 +130,10 @@ public class UserService implements IUserService {
     }
 
     private boolean emailExist(final String email) {
-        final UserDTO user = repository.findByEmail(email);
-        if (user != null) {
-            return true;
-        }
+//        final UserDTO user = repository.findByEmail(email);
+//        if (user != null) {
+//            return true;
+//        }
         return false;
     }
 }

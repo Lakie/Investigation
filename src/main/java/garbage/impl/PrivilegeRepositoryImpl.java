@@ -1,33 +1,32 @@
-package com.unesasoft.persistance.dao.impl;
+package garbage.impl;
 
-import com.unesasoft.persistance.dao.VerificationTokenRepository;
-import com.unesasoft.persistance.dto.UserDTO;
-import com.unesasoft.persistance.dto.VerificationTokenDTO;
+import com.unesasoft.persistance.dao.PrivilegeRepository;
+import com.unesasoft.persistance.dto.PrivilegeDTO;
 import org.springframework.data.jpa.provider.PersistenceProvider;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.JpaEntityInformationSupport;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
-import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 /**
  * Created by Slavyanin on 17.12.2015.
  */
-@Repository
-public class VerificationTokenRepositoryImpl extends SimpleJpaRepository<VerificationTokenDTO, Long> implements VerificationTokenRepository {
-    private final JpaEntityInformation<VerificationTokenDTO, ?> entityInformation;
+//@Repository
+public class PrivilegeRepositoryImpl extends SimpleJpaRepository<PrivilegeDTO, Long> implements PrivilegeRepository {
+    private final JpaEntityInformation<PrivilegeDTO, ?> entityInformation;
     private final EntityManager entityManager;
     private final PersistenceProvider provider;
 
-    public VerificationTokenRepositoryImpl(JpaEntityInformation<VerificationTokenDTO, ?> entityInformation, EntityManager entityManager) {
+    public PrivilegeRepositoryImpl(JpaEntityInformation<PrivilegeDTO, ?> entityInformation, EntityManager entityManager) {
         super(entityInformation, entityManager);
         this.entityInformation = entityInformation;
         this.entityManager = entityManager;
         this.provider = PersistenceProvider.fromEntityManager(entityManager);
     }
 
-    public VerificationTokenRepositoryImpl(Class<VerificationTokenDTO> domainClass, EntityManager entityManager) {
+    public PrivilegeRepositoryImpl(Class<PrivilegeDTO> domainClass, EntityManager entityManager) {
         super(domainClass, entityManager);
         this.entityInformation = JpaEntityInformationSupport.getEntityInformation(domainClass, entityManager);
         this.entityManager = entityManager;
@@ -35,12 +34,9 @@ public class VerificationTokenRepositoryImpl extends SimpleJpaRepository<Verific
     }
 
     @Override
-    public VerificationTokenDTO findByToken(String token) {
-        return null;
-    }
-
-    @Override
-    public VerificationTokenDTO findByUser(UserDTO user) {
-        return null;
+    public PrivilegeDTO findByName(String name) {
+        Query query = entityManager.createQuery("from PrivilegeDTO where name=:name");
+        query.setParameter("name",name);
+        return (PrivilegeDTO) query.getSingleResult();
     }
 }

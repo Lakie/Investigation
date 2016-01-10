@@ -24,19 +24,14 @@ public class VerificationTokenDTO {
     private Date expiryDate;
 
     public VerificationTokenDTO() {
-        super();
     }
 
     public VerificationTokenDTO(String token) {
-        super();
-
         this.token = token;
         this.expiryDate = calculateExpiryDate(EXPIRATION);
     }
 
     public VerificationTokenDTO(String token, UserDTO user) {
-        super();
-
         this.token = token;
         this.user = user;
         this.expiryDate = calculateExpiryDate(EXPIRATION);

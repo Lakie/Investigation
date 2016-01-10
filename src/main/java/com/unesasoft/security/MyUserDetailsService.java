@@ -58,7 +58,7 @@ public class MyUserDetailsService implements UserDetailsService {
         }
 
         try {
-            final UserDTO user = userRepository.findByEmail(email);
+            final UserDTO user = new UserDTO();//userRepository.findByEmail(email);
             if (user == null) {
                 return new org.springframework.security.core.userdetails.User(" ", " ", true, true, true, true, getAuthorities(Arrays.asList(roleRepository.findByName("ROLE_USER"))));
             }

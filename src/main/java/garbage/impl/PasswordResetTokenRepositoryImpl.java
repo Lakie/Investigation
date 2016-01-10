@@ -1,33 +1,32 @@
-package com.unesasoft.persistance.dao.impl;
+package garbage.impl;
 
-import com.unesasoft.persistance.dao.PrivilegeRepository;
-import com.unesasoft.persistance.dto.PrivilegeDTO;
+import com.unesasoft.persistance.dao.PasswordResetTokenRepository;
+import com.unesasoft.persistance.dto.PasswordResetTokenDTO;
+import com.unesasoft.persistance.dto.UserDTO;
 import org.springframework.data.jpa.provider.PersistenceProvider;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.JpaEntityInformationSupport;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
-import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 
 /**
  * Created by Slavyanin on 17.12.2015.
  */
-@Repository
-public class PrivilegeRepositoryImpl extends SimpleJpaRepository<PrivilegeDTO, Long> implements PrivilegeRepository {
-    private final JpaEntityInformation<PrivilegeDTO, ?> entityInformation;
+//@Repository
+public class PasswordResetTokenRepositoryImpl extends SimpleJpaRepository<PasswordResetTokenDTO, Long> implements PasswordResetTokenRepository {
+    private final JpaEntityInformation<PasswordResetTokenDTO, ?> entityInformation;
     private final EntityManager entityManager;
     private final PersistenceProvider provider;
 
-    public PrivilegeRepositoryImpl(JpaEntityInformation<PrivilegeDTO, ?> entityInformation, EntityManager entityManager) {
+    public PasswordResetTokenRepositoryImpl(JpaEntityInformation<PasswordResetTokenDTO, ?> entityInformation, EntityManager entityManager) {
         super(entityInformation, entityManager);
         this.entityInformation = entityInformation;
         this.entityManager = entityManager;
         this.provider = PersistenceProvider.fromEntityManager(entityManager);
     }
 
-    public PrivilegeRepositoryImpl(Class<PrivilegeDTO> domainClass, EntityManager entityManager) {
+    public PasswordResetTokenRepositoryImpl(Class<PasswordResetTokenDTO> domainClass, EntityManager entityManager) {
         super(domainClass, entityManager);
         this.entityInformation = JpaEntityInformationSupport.getEntityInformation(domainClass, entityManager);
         this.entityManager = entityManager;
@@ -35,9 +34,12 @@ public class PrivilegeRepositoryImpl extends SimpleJpaRepository<PrivilegeDTO, L
     }
 
     @Override
-    public PrivilegeDTO findByName(String name) {
-        Query query = entityManager.createQuery("from PrivilegeDTO where name=:name");
-        query.setParameter("name",name);
-        return (PrivilegeDTO) query.getSingleResult();
+    public PasswordResetTokenDTO findByToken(String token) {
+        return null;
+    }
+
+    @Override
+    public PasswordResetTokenDTO findByUser(UserDTO user) {
+        return null;
     }
 }
