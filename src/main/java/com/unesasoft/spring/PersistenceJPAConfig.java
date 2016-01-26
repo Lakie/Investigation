@@ -21,7 +21,7 @@ import java.util.Properties;
  */
 @Configuration
 @EnableTransactionManagement
-@PropertySource({ "classpath:persistence.properties" })
+@PropertySource({"classpath:persistence.properties"})
 //@ComponentScan({ "com.unesasoft.persistence" })
 @EnableJpaRepositories(basePackages = "com.unesasoft.persistance")
 public class PersistenceJPAConfig {

@@ -20,6 +20,7 @@
     <link rel="Shortcut Icon" href="../img/favicon.ico" type="image/x-icon" />
 
     <style type="text/css" media="all">@import "../css/style.css";</style>
+    <style type="text/css" media="all">@import "../css/flags.css";</style>
     <!--[if IE]><link href="../css/ie.css" rel="stylesheet" type="text/css"><![endif]-->
     <script type="text/javascript">
         <!--

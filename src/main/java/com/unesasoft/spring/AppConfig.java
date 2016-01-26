@@ -1,22 +1,29 @@
 package com.unesasoft.spring;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.Locale;
 import java.util.Properties;
 
 /**
@@ -29,15 +36,13 @@ import java.util.Properties;
 //@EnableTransactionManagement
 @ComponentScan(basePackages = { "com.unesasoft"  })
 @PropertySource("classpath:email.properties")
+
 public class AppConfig extends WebMvcConfigurerAdapter {
     @Autowired
     private Environment env;
-    //@Autowired
-    //private UserService userService;
+
     @PersistenceContext
     EntityManager entityManager;
-
-    // beans
 
     @Bean
     public ViewResolver viewResolver() {
@@ -78,13 +83,28 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         return mailSenderImpl;
     }
 
-    //repositories
-    //@Bean
-//    public IUserService iUserService(){
-//        return userService;
-//    }
-//    @Bean
-//    public UserRepository userRepository(){
-//        return new UserRepositoryImpl(UserDTO.class, entityManager);
-//    }
+    @Bean(name="messageSource")
+    public MessageSource messageSource() {
+        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+        messageSource.setBasename("messages");
+        return messageSource;
+    }
+    @Bean(name = "localeResolver")
+    public LocaleResolver localeResolver(){
+        SessionLocaleResolver localeResolver=new SessionLocaleResolver();
+        localeResolver.setDefaultLocale(new Locale("ua"));
+
+        return localeResolver;
+//        CookieLocaleResolver resolver = new CookieLocaleResolver();
+//        resolver.setDefaultLocale(new Locale("en"));
+//        resolver.setCookieName("coda2LocaleCookie");
+//        resolver.setCookieMaxAge(4800);
+//        return resolver;
+    }
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
+        interceptor.setParamName("locale");
+        registry.addInterceptor(interceptor);
+    }
 }

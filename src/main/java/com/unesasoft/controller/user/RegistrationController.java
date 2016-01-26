@@ -1,4 +1,4 @@
-package com.unesasoft.controller;
+package com.unesasoft.controller.user;
 
 import com.unesasoft.dto.UserBean;
 import com.unesasoft.event.OnRegistrationCompleteEvent;
@@ -26,10 +26,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -66,11 +64,19 @@ public class RegistrationController {
 
     }
 
-     @RequestMapping(value = "/user/registration", method = RequestMethod.POST)
-    @ResponseBody
-    public GenericResponse registerUserAccount(@Valid final UserBean accountDto, final HttpServletRequest request) throws UserAlreadyExistException {
-        LOGGER.debug("Registering user account with information: {}", accountDto);
+//    @ExceptionHandler(BindException.class)
+//    public void handleExceptions(Exception anExc) {
+//        LOGGER.error(anExc.toString(), anExc); // do something better than this ;)
+//    }
 
+    @RequestMapping(value = "/user/registration", method = RequestMethod.POST)
+//    @ResponseBody
+    public String registerUserAccount( @Valid @ModelAttribute(value = "accountDto") final UserBean accountDto,
+                                       BindingResult result, final HttpServletRequest request) throws UserAlreadyExistException {
+        LOGGER.debug("Registering user account with information: {}", accountDto);
+        if (result.hasErrors()) {
+            return "/user/registration";
+        }
         final UserDTO registered = createUserAccount(accountDto);
         if (registered == null) {
             throw new UserAlreadyExistException();
@@ -78,7 +84,17 @@ public class RegistrationController {
         final String appUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
         eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(), appUrl));
 
-        return new GenericResponse("success");
+        return "redirect:/user/success";
+    }
+
+    @RequestMapping(value = "/user/registration", method = RequestMethod.GET)
+    public void registerUserAccount( Model model) {
+        model.addAttribute("accountDto", new UserBean());
+//        return new GenericResponse("success");
+    }
+
+    @RequestMapping(value = "/user/success", method = RequestMethod.GET)
+    public void successView( Model model) {
     }
 
     @RequestMapping(value = "/regitrationConfirm", method = RequestMethod.GET)
@@ -87,7 +103,7 @@ public class RegistrationController {
         if (verificationToken == null) {
             final String message = messages.getMessage("auth.message.invalidToken", null, locale);
             model.addAttribute("message", message);
-            return "redirect:/badUser.html?lang=" + locale.getLanguage();
+            return "redirect:/badUser.html?locale=" + locale.getLanguage();
         }
 
         final UserDTO user = verificationToken.getUser();
@@ -96,7 +112,7 @@ public class RegistrationController {
             model.addAttribute("message", messages.getMessage("auth.message.expired", null, locale));
             model.addAttribute("expired", true);
             model.addAttribute("token", token);
-            return "redirect:/badUser.html?lang=" + locale.getLanguage();
+            return "redirect:/badUser.html?locale=" + locale.getLanguage();
         }
 
         user.setEnabled(true);

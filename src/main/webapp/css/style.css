@@ -384,13 +384,18 @@ label {
 	height:22px;	
 	}
 
-
+/* locale*/
+#locale{
+	margin-left: 800px;
+	position: absolute;
+	width: 200px;
+}
 /* Search Field
 ----------------------------------------------- */
 #searchform {
 	position:absolute;
 	top:37px;
-	left:759px;
+	left:559px;
 	font-size:12px;
 	}
 
@@ -676,7 +681,7 @@ a:hover {
 	padding:4px 22px 3px 9px;
 	position:absolute;
 	top:38px;
-	left:695px;
+	left:495px;
 	font-family:"Lucida Grande",Arial,"Bitstream Vera Sans",sans-serif;
 	}
 
@@ -945,7 +950,10 @@ blockquote {
 	border:0;
 	padding:0;
 	}
-
+.error{
+	color: red;
+	display: inline;
+}
 
 
 
