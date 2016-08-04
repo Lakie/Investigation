@@ -5,6 +5,7 @@
  Time: 18:28
  To change this template use File | Settings | File Templates.
 --%>
+<%@ page pageEncoding="UTF-8"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div id="header">
     <div>
@@ -31,9 +32,9 @@
         </form>
     </div>
     <div id="locale">
-        <a href="locale?locale=ua" class="flag flag-ua"><img src="/img/blank.gif" class="flag flag-ua" alt="Ukrainian" /></a>
-        <a href="locale?locale=ru" class="flag flag-ua"><img src="/img/blank.gif" class="flag flag-ru" alt="Russian" /></a>
-        <a href="locale?locale=en" class="flag flag-ua"><img src="/img/blank.gif" class="flag flag-gb" alt="English" /></a>
+        <a href="?locale=ua" class="flag flag-ua"><img src="/img/blank.gif" class="flag flag-ua" alt="Ukrainian" /></a>
+        <a href="?locale=ru" class="flag flag-ua"><img src="/img/blank.gif" class="flag flag-ru" alt="Russian" /></a>
+        <a href="?locale=en" class="flag flag-ua"><img src="/img/blank.gif" class="flag flag-gb" alt="English" /></a>
     </div>
 </div>
 <!-- end header -->

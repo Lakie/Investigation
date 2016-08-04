@@ -17,10 +17,10 @@ public class UserBean {
     private String firstName;
 
     @NotNull
-    @Size(min = 1)
+    @Size(min = 1, message = "{validation.registration.size}")
     private String lastName;
 
-    @ValidPassword
+    @ValidPassword(message = "{validation.registration.password.invalid}")
     private String password;
 
     @NotNull
@@ -29,7 +29,6 @@ public class UserBean {
 
     @ValidEmail
     @NotNull
-//    @Size(min = 1)
     private String email;
 
 

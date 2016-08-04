@@ -1,10 +1,11 @@
 <div class="containerleft">
   <div id="menu">
     <ul>
+      <li><a href="/index">Home page</a></li>
       <li><a href="#">About Us</a></li>
       <li><a href="#">Services</a></li>
       <li><a href="#">Portfolio</a></li>
-      <li><a href="#">Our Blog</a></li>
+      <%--<li><a href="#">Our Blog</a></li>--%>
       <li><a href="#">Contact Us</a></li>
       <li><a href="/user/registration">Registration</a></li>
     </ul>

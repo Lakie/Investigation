@@ -10,6 +10,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -50,7 +51,6 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         viewResolver.setViewClass(JstlView.class);
         viewResolver.setPrefix("/views/");
         viewResolver.setSuffix(".jsp");
-
         return viewResolver;
     }
 
@@ -87,12 +87,30 @@ public class AppConfig extends WebMvcConfigurerAdapter {
     public MessageSource messageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
         messageSource.setBasename("messages");
+        messageSource.setDefaultEncoding("UTF-8");
         return messageSource;
     }
+
+    /*
+    <bean id ="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"
+        p:validationMessageSource-ref="messageSource"/>
+     */
+    @Bean(name="validator")
+    public LocalValidatorFactoryBean validatorFactoryBean() {
+        LocalValidatorFactoryBean localValidatorFactoryBean = new LocalValidatorFactoryBean();
+//        messageSource.setBasename("messages");
+//        localValidatorFactoryBean. ("UTF-8");
+        localValidatorFactoryBean.setValidationMessageSource(messageSource());
+        return localValidatorFactoryBean;
+    }
+
+
+
     @Bean(name = "localeResolver")
     public LocaleResolver localeResolver(){
         SessionLocaleResolver localeResolver=new SessionLocaleResolver();
         localeResolver.setDefaultLocale(new Locale("ua"));
+
 
         return localeResolver;
 //        CookieLocaleResolver resolver = new CookieLocaleResolver();
@@ -107,4 +125,9 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         interceptor.setParamName("locale");
         registry.addInterceptor(interceptor);
     }
+
+//    @Bean(name = "multipartResolver")
+//    public CommonsMultipartResolver getMultipartResolver() {
+//        return new CommonsMultipartResolver();
+//    }
 }
